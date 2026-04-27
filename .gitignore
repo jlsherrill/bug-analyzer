@@ -1,0 +1,31 @@
+# Environment variables and secrets
+.env
+.env.local
+*.key
+*.pem
+credentials.json
+
+# User-specific repository configuration
+repositories.md
+
+# Claude Code
+.claude/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Logs
+*.log
+logs/
+
+# Temporary files
+*.tmp
+temp/
