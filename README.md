@@ -1,10 +1,10 @@
 # Jira Bug Analyzer
 
-Automated Jira bug triage using Claude Code. Polls Jira every 5 minutes for bugs labeled `ai-triage`, analyzes them using local source code, and posts analysis with fix suggestions back to Jira.
+Automated Jira bug triage using Claude Code. Polls Jira every 5 minutes for bugs labeled `ib-ai-triage`, analyzes them using local source code, and posts analysis with fix suggestions back to Jira.
 
 ## Features
 
-- Polls Jira Cloud every 5 minutes for `ai-triage` labeled issues
+- Polls Jira Cloud every 5 minutes for `ib-ai-triage` labeled issues
 - Analyzes up to 3 issues per cycle
 - Searches across multiple local repositories for relevant code
 - Provides medium-depth analysis with:
@@ -13,7 +13,7 @@ Automated Jira bug triage using Claude Code. Polls Jira every 5 minutes for bugs
   - 2-3 potential fix approaches
   - Effort estimates
 - Posts markdown-formatted analysis as Jira comments
-- Updates labels (`ai-triage` → `ai-analyzed`) to prevent re-processing
+- Updates labels (`ib-ai-triage` → `ai-analyzed`) to prevent re-processing
 - Runs while Claude Code session is active
 
 ## Prerequisites
@@ -23,33 +23,13 @@ Automated Jira bug triage using Claude Code. Polls Jira every 5 minutes for bugs
    - `JIRA_URL` - Your Jira Cloud instance URL (e.g., `https://yourcompany.atlassian.net`)
    - `JIRA_EMAIL` - Your Jira account email
    - `JIRA_API_TOKEN` - Your Jira API token ([generate here](https://id.atlassian.com/manage-profile/security/api-tokens))
-3. **Local repositories** - The codebases you want to analyze must be locally accessible
+3. **Local repositories** - The codebases you want to analyze must be locally accessible.  Ask claude to 'checkout repos mentioned in repositories.md into ./repos/'
 
 ## Setup
 
 ### 1. Configure Repositories
 
-Copy the example repositories file and customize it:
-
-```bash
-cp repositories.md.example repositories.md
-```
-
-Edit `repositories.md` with your actual repository paths:
-
-```markdown
-# Bug Solver Repositories
-
-## /home/user/projects/my-app
-**Purpose:** Main web application
-**Stack:** React, TypeScript, Node.js
-**Covers:** Frontend bugs, API client issues
-**Key areas:**
-- src/components/ - React components
-- src/api/ - API client
-```
-
-Add all repositories you want the analyzer to search.
+Ask claude to 'checkout repos mentioned in repositories.md into ./repos/'
 
 ### 2. Verify Environment Variables
 
@@ -57,11 +37,30 @@ Ensure your Jira credentials are set:
 
 ```bash
 echo $JIRA_URL
-echo $JIRA_EMAIL
+echo $JIRA_USERNAME
 echo $JIRA_API_TOKEN
 ```
 
-If not set, add them to your shell profile or `.env` file.
+If not set, add them to your shell profile or `.env` file, or to your ~/.claude.json file:
+
+```
+    "mcp-atlassian": {
+      "type": "stdio",
+      "command": "uvx",
+      "args": [
+        "--with",
+        "fakeredis<2.35",
+        "mcp-atlassian"
+      ],
+      "env": {
+        "JIRA_URL": "https://redhat.atlassian.net",
+        "JIRA_USERNAME": "user@redhat.com",
+        "JIRA_API_TOKEN": "TOKEN"
+      }
+    }
+  },
+
+```
 
 ### 3. Test MCP Connection
 
@@ -99,7 +98,7 @@ The analyzer will report:
 
 Example output:
 ```
-Found 2 issues with ai-triage label
+Found 2 issues with ib-ai-triage label
 Analyzing PROJ-123: Login fails with 500 error
 - Searching repositories...
 - Found relevant code in backend-api
@@ -126,10 +125,10 @@ Press `Ctrl+C` in Claude Code to stop the loop.
 ### Creating Issues for Analysis
 
 1. Create or find a Jira issue
-2. Add the `ai-triage` label to it
+2. Add the `ib-ai-triage` label to it
 3. Wait up to 5 minutes for the analyzer to process it
 4. Check the issue for the AI Analysis comment
-5. The label will change from `ai-triage` to `ai-analyzed`
+5. The label will change from `ib-ai-triage` to `ib-ai-analyzed`
 
 ### Using Analysis Results
 

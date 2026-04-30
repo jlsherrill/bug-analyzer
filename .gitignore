@@ -5,8 +5,8 @@
 *.pem
 credentials.json
 
-# User-specific repository configuration
-repositories.md
+
+repos/*
 
 # Claude Code
 .claude/

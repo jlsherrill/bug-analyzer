@@ -18,13 +18,13 @@ Or simply:
 
 ## Prompt
 
-Analyze Jira bugs with the `ai-triage` label:
+Analyze Jira bugs with the `ib-ai-triage` label:
 
-1. **Query Jira** via mcp-atlassian for issues with label `ai-triage`, ordered by created date ascending, limit to 3 issues
+1. **Query Jira** via mcp-atlassian for issues with label `ib-ai-triage`, ordered by created date ascending, limit to 3 issues
 
-2. If no issues found, report "No ai-triage issues found" and exit
+2. If no issues found, report "No ib-ai-triage issues found" and exit
 
-3. **Read repositories.md** to understand available repositories and their context
+3. **Read repositories.md** to understand available repositories and their context this file also includes information about how the repos work together and how they provide different interfaces for the user
 
 4. **For each issue (max 3):**
    
@@ -77,8 +77,8 @@ Analyze Jira bugs with the `ai-triage` label:
    e. Post comment to Jira issue via mcp-atlassian
    
    f. Update labels via mcp-atlassian:
-      - Remove `ai-triage`
-      - Add `ai-analyzed`
+      - Remove `ib-ai-triage`
+      - Add `ib-ai-analyzed`
    
    g. Report success: "Analyzed [ISSUE-KEY]: [summary]"
 
